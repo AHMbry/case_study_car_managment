@@ -11,7 +11,7 @@ class LinkedList:
     def __init__(self):
         self.next=None
     
-    def append_byorder(self, ID, brand, model, year, price, mileage):
+    def insertsorted(self, ID, brand, model, year, price, mileage):
         new_node=node(ID,brand,model,year,price,mileage)
         if not self.head or year<self.head.year or (year==self.head.year and price<self.head.price):
             new_node.next=self.head
@@ -44,7 +44,7 @@ class LinkedList:
         while current and current.next.year :
             pass
     
-    def romove_by_Id(self,Target):
+    def remove_by_Id(self,Target):
         current=self.head
         previous=None
         while current:
@@ -74,6 +74,14 @@ class LinkedList:
                 results.append(current)
             current=current.next
         return results
+    def search_by_model(self,Target):
+        results = []
+        current=self.head
+        while current:
+            if current.model==Target:
+                results.append(current)
+            current=current.next
+        return results
     
 
 
@@ -92,6 +100,12 @@ def read_from_file(filename, linked_list):
                 mileage = int(line[5].strip())
 
                 # Insert the vehicle into the linked list in sorted order
-                linked_list.append_byorder(id, brand, model, year, price, mileage)
+                linked_list.insertsorted(id, brand, model, year, price, mileage)
 
-
+def write_in_newfile(filename,linked_list):
+    with open (filename,'w') as f:
+        current=linked_list.head
+        while current:
+            f.write(f"{current.id},{current.brand},{current.model},{current.year},{current.price},{current.mileage}\n")
+            current=current.next
+        print(f"Data written to {filename}.")

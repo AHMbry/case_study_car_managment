@@ -30,7 +30,7 @@ def main():
         year=int(input("enter The manufacture year of the vehicule"))
         price=float(input("Price of the vehicule"))
         mileage=float(input("enter tha mileage of the car"))
-        linked_list.insert(ID, brand, model, year, price, mileage)
+        linked_list.insertsorted(ID, brand, model, year, price, mileage)
     elif choice=="4":
         pass
     elif choice=="5":
@@ -50,7 +50,8 @@ def main():
         else:
             print("invalid input you dumass**")
     elif choice=="7":
-
+        filename=input('enter the file name/path')
+        write_in_newfile(filename,linked_list)
 
 
 
