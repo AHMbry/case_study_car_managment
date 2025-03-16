@@ -9,7 +9,7 @@ class node:
 
 class LinkedList:
     def __init__(self):
-        self.next=None
+        self.head=None
     
     def insertsorted(self, ID, brand, model, year, price, mileage):
         new_node=node(ID,brand,model,year,price,mileage)
@@ -30,25 +30,15 @@ class LinkedList:
             print("List is empty.")
             return
         while current:
-            print(f"Id:{self.ID}/brand:{self.brand}/model:{self.model}/price:{self.price}/mileage:{self.mileage}")
+            print(f"Id:{current.ID}/brand:{current.brand}/model:{current.model}/price:{current.price}/mileage:{current.mileage}")
             current=current.next
 
-
-    def insert(self,ID, brand, model, year, price, mileage):
-        new_node=node(ID, brand, model, year, price, mileage)
-        if not self.head or year < self.head.yead or (year==self.head.year and price < self.head.price):
-            new_node.next=self.head
-            self.head=new_node
-            return
-        current=self.head
-        while current and current.next.year :
-            pass
     
     def remove_by_Id(self,Target):
         current=self.head
         previous=None
         while current:
-            if current.ID ==Target:
+            if current.ID ==Target: 
                 if previous==None:
                     self.head = current.next
                 else:
@@ -83,6 +73,29 @@ class LinkedList:
             current=current.next
         return results
     
+    def update_info(self,ID, brand =None, model=None, year=None, price=None, mileage=None):
+        current=self.head
+        previous = None
+        while current:
+            if current.ID==ID:
+                if brand is not None:
+                    self.brand = brand
+                if model is not None:
+                    self.model = model
+                if year is not None:
+                    self.year = year
+                if price is not None:
+                    self.price = price
+                if mileage is not None:
+                    self.mileage = mileage
+
+                self.remove_by_Id(ID)
+                self.insertsorted(current.ID,current.brand,current.model,current.price,current.year,current.mileage)
+                return
+            current=current.next
+        print(f"Vehicle with ID {ID} not found.")
+        
+    
 
 
 
@@ -109,3 +122,7 @@ def write_in_newfile(filename,linked_list):
             f.write(f"{current.id},{current.brand},{current.model},{current.year},{current.price},{current.mileage}\n")
             current=current.next
         print(f"Data written to {filename}.")
+filename='file.csv'
+linkedlist=LinkedList()
+read_from_file(filename,linkedlist)
+linkedlist.print_list()
